@@ -8,8 +8,9 @@ class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-
   Stream<User?> get Authchanged => _auth.authStateChanges();
+
+  User get user => _auth.currentUser!;
 
   Future<bool> signinwithgoogle(BuildContext context) async {
     bool res = false;
@@ -23,19 +24,21 @@ class AuthMethods {
           await _auth.signInWithCredential(credential);
 
       User? user = userCredential.user;
-      if(user != null){
-        if(userCredential.additionalUserInfo!.isNewUser){
-          await _firestore.collection('users').doc(user.uid).set({
-            'username': user.displayName, 'uid': user.uid, 'profilephoto': user.photoURL,
-          });
+      if (user != null) {
+        if (userCredential.additionalUserInfo!.isNewUser) {
+          await _firestore.collection('users').doc(user.uid).set(
+            {
+              'username': user.displayName,
+              'uid': user.uid,
+              'profilephoto': user.photoURL,
+            },
+          );
         }
-        res =true;
-      } 
-    }on FirebaseAuthException  catch (e) {
+        res = true;
+      }
+    } on FirebaseAuthException catch (e) {
       showsnackbar(context, e.message!);
-      res =false;
-
-
+      res = false;
     }
     return res;
   }

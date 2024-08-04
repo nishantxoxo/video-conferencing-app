@@ -4,6 +4,7 @@ import 'package:video_conferencing_app/firebase_options.dart';
 import 'package:video_conferencing_app/resources/auth_methods.dart';
 import 'package:video_conferencing_app/screens/home_screen.dart';
 import 'package:video_conferencing_app/screens/login_screen.dart';
+import 'package:video_conferencing_app/screens/video_call_screen.dart';
 import 'package:video_conferencing_app/utils/colors.dart';
 
 void main() async{
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         }
         return LoginScreen();
       },) ,
-      routes: {'/login' : (context) => LoginScreen(), '/home' : (context) => HomeScreen()} ,
+      routes: {'/login' : (context) => LoginScreen(), '/home' : (context) => HomeScreen(),  '/video-call': (context) => VideoCallScreen()} ,
     );
   }
 }
