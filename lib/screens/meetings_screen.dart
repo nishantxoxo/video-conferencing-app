@@ -47,7 +47,7 @@ class MeetingsScreen extends StatelessWidget {
             ),
           ],
         ),
-        Expanded(
+        const Expanded(
           child: Center(
             child: Text(
               'create/join meetings with just a click!',
@@ -56,6 +56,6 @@ class MeetingsScreen extends StatelessWidget {
           ),
         )
       ],
-    );;
+    );
   }
 }

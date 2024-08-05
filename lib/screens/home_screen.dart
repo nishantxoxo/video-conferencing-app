@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:video_conferencing_app/resources/auth_methods.dart';
 import 'package:video_conferencing_app/screens/history_meeting_screen.dart';
 import 'package:video_conferencing_app/screens/meetings_screen.dart';
 import 'package:video_conferencing_app/utils/colors.dart';
-import 'package:video_conferencing_app/widgets/home_meeting_button.dart';
+import 'package:video_conferencing_app/widgets/custom_button.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,14 +20,20 @@ class _HomeScreenState extends State<HomeScreen> {
       _pg = page;
     });
   }
-  List<Widget> pages = [ MeetingsScreen(), HistoryMeetingScreen(), Text('contacts'), Text('settings')];
+
+  List<Widget> pages = [
+    MeetingsScreen(),
+    const HistoryMeetingScreen(),
+    const Text('contacts'),
+    CustomButton(text: 'log out', onPressed: () => AuthMethods().signOut())
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text('meet and chat'),
+        title: const Text('meet and chat'),
         centerTitle: true,
         backgroundColor: backgroundColor,
       ),
@@ -59,10 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Icons.settings_outlined,
               ),
               label: "setting"),
-          
         ],
       ),
     );
   }
 }
-

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jitsi_meet_v1/jitsi_meet.dart';
 import 'package:video_conferencing_app/resources/auth_methods.dart';
 import 'package:video_conferencing_app/resources/jitsi_meet_methods.dart';
 import 'package:video_conferencing_app/utils/colors.dart';
@@ -31,7 +30,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   bool isVideoMuted = true;
   @override
   void initState() {
-    // TODO: implement initState
+    
     meetingidcontroller = TextEditingController();
     namecontroller = TextEditingController(text: _authMethods.user.displayName);
     super.initState();
@@ -42,7 +41,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     super.dispose();
     meetingidcontroller.dispose();
     namecontroller.dispose();
-    JitsiMeet.removeAllListeners();
+    
   }
 
   _joinMeeting() {

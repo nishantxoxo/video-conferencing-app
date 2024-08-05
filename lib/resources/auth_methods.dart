@@ -42,4 +42,12 @@ class AuthMethods {
     }
     return res;
   }
+
+  void signOut() {
+    try {
+      _auth.signOut();
+    } catch (e) {
+      print(e);
+    }
+  }
 }
