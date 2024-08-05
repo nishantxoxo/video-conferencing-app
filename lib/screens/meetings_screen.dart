@@ -9,7 +9,7 @@ class MeetingsScreen extends StatelessWidget {
   final JitsiMeetMethods jitsiMeetMethods = JitsiMeetMethods();
   createNewMeeting() async{
     var random = Random();
-    String roomName = (random.nextInt(10000000) + 10000000).toString();
+    String roomName = (random.nextInt(1000000000) + 1000000000).toString();
     jitsiMeetMethods.createMeet(roomName: roomName, isAudioMuted: true, isVideoMuted: true);
   }
 

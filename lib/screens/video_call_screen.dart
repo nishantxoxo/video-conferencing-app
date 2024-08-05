@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:jitsi_meet_v1/jitsi_meet.dart';
 import 'package:video_conferencing_app/resources/auth_methods.dart';
+import 'package:video_conferencing_app/resources/jitsi_meet_methods.dart';
 import 'package:video_conferencing_app/utils/colors.dart';
 import 'package:video_conferencing_app/widgets/meeting_option.dart';
 
@@ -14,7 +16,19 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   final AuthMethods _authMethods = AuthMethods();
   late TextEditingController meetingidcontroller;
   late TextEditingController namecontroller;
-
+  final JitsiMeetMethods _jitsiMeetMethods = JitsiMeetMethods();
+  onAudioMuted(bool val) {
+    setState(() {
+      isAudioMuted = val;
+    });
+  }
+  onVideoMuted(bool val) {
+    setState(() {
+      isVideoMuted = val;
+    });
+  }
+  bool isAudioMuted = true;
+  bool isVideoMuted = true;
   @override
   void initState() {
     // TODO: implement initState
@@ -23,7 +37,17 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     super.initState();
   }
 
-  _joinMeeting() {}
+  @override
+  void dispose(){
+    super.dispose();
+    meetingidcontroller.dispose();
+    namecontroller.dispose();
+    JitsiMeet.removeAllListeners();
+  }
+
+  _joinMeeting() {
+    _jitsiMeetMethods.createMeet(roomName: meetingidcontroller.text, isAudioMuted: isAudioMuted, isVideoMuted: isVideoMuted, username: namecontroller.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +55,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
-        title: Text(
+        title: const Text(
           'join a meeting',
           style: TextStyle(fontSize: 18),
         ),
@@ -46,7 +70,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               maxLines: 1,
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   fillColor: secondaryBackgroundColor,
                   filled: true,
                   border: InputBorder.none,
@@ -61,7 +85,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               maxLines: 1,
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   fillColor: secondaryBackgroundColor,
                   filled: true,
                   border: InputBorder.none,
@@ -69,7 +93,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   contentPadding: EdgeInsets.fromLTRB(16, 8, 0, 0)),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           InkWell(
@@ -82,8 +106,19 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               ),
             ),
           ),
-          SizedBox(height: 20,),
-          MeetingOption(text: 'dont join a meeting'),
+          const SizedBox(
+            height: 20,
+          ),
+          MeetingOption(
+            text: 'Mute audio',
+            ismute: isAudioMuted,
+            onChanged: onAudioMuted,
+          ),
+          MeetingOption(
+            text: 'mute camera',
+            ismute: isVideoMuted,
+            onChanged: onVideoMuted,
+          ),
         ],
       ),
     );
